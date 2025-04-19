@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Gerenciador de Dados</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <ul class="nav">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="register_user.html" class="active">Gerenciador de Dados</a></li>
+        <li><a href="#about">Sobre</a></li>
+    </ul>
+
+    <h1>Cadastrar Novo Usuário</h1>
+
+    <form id="userForm">
+        <input type="text" id="name" placeholder="Nome" required>
+        <input type="email" id="email" placeholder="Email" required>
+        <button type="submit">Salvar</button>
+        <p id="mensagem" class="mensagem"></p>
+    </form>
+
+    <h2>Usuários Cadastrados</h2>
+
+    <form id="editForm" style="display: none;">
+        <input type="text" id="editNome" placeholder="Nome" required>
+        <input type="email" id="editEmail" placeholder="Email" required>
+        <input type="hidden" id="editIndex">
+        <input type="submit" value="Salvar Alterações">
+    </form>
+
+    <table id="data_table">
+        <thead>
+            <tr>
+                <th>Nome</th>
+                <th>Email</th>
+                <th>Ações</th>
+            </tr>
+        </thead>
+        <tbody>
+        </tbody>
+    </table>
+
+    <script src="form_register.js"></script>
+</body>
+</html>

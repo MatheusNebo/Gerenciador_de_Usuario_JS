@@ -1,0 +1,162 @@
+/* Estilos globais do corpo */
+body {
+  font-family: sans-serif;
+  background-color: black;
+  color: white;
+  padding: 20px;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Navegação principal */
+.nav {
+  list-style: none;
+  padding: 0;
+  margin-bottom: 20px;
+  display: flex;
+  gap: 15px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.nav li a {
+  display: block;
+  padding: 12px 16px;
+  text-decoration: none;
+  color: white;
+  background-color: #21a3ca;
+  border-radius: 5px;
+  transition: background-color 0.3s;
+}
+
+.nav li a:hover{
+  background-color: #1e8bb8;
+}
+
+/* Estilos para formulários */
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: 100%;
+  max-width: 400px;
+  margin-bottom: 20px;
+}
+
+/* Campos de entrada de texto e email */
+input[type="text"],
+input[type="email"],
+input[type="password"] {
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  background-color: rgba(255, 255, 255, 0.05);
+  color: white;
+  box-sizing: border-box;
+}
+
+input:focus {
+  background-color: rgba(255, 255, 255, 0.2);
+  outline: none;
+}
+
+/* Botões de submit (formulários e geral) */
+button[type="submit"],
+input[type="submit"],
+button { /* Adicionado para incluir botões de editar/excluir */
+  padding: 10px;
+  border-radius: 5px;
+  border: none;
+  background-color: #21a3ca;
+  color: white;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+button[type="submit"]:hover,
+input[type="submit"]:hover,
+button:hover { /* Adicionado para incluir botões de editar/excluir */
+  background-color: #1e8bb8;
+}
+
+/* Lista de usuários (removido pois não é mais usado diretamente) */
+
+/* Tabela de dados */
+table {
+  width: 90%;
+  max-width: 600px;
+  margin-top: 20px;
+  border-collapse: collapse;
+  background-color: rgba(255, 255, 255, 0.05);
+  color: white;
+}
+
+th,
+td {
+  padding: 12px;
+  border: 1px solid #ccc;
+  text-align: center;
+}
+
+th {
+  background-color: #21a3ca;
+}
+
+/* Botões de editar/excluir (otimizado com a regra geral de button) */
+button {
+  padding: 6px 10px;
+  margin-left: 5px;
+  border-radius: 4px; /* Sobrescreve o raio maior para botões específicos */
+}
+
+/* Placeholder branco */
+::placeholder {
+  color: white;
+}
+
+/* Animação de fade-in */
+@keyframes fadeIn {
+  from {
+      opacity: 0;
+      transform: scale(0.95);
+  }
+
+  to {
+      opacity: 1;
+      transform: scale(1);
+  }
+}
+
+/* Animação de fade-out */
+@keyframes fadeOut {
+  from {
+      opacity: 1;
+  }
+
+  to {
+      opacity: 0;
+  }
+}
+
+/* Mensagem de feedback */
+.mensagem {
+  display: none;
+  opacity: 0;
+  animation: fadeIn 0.5s ease-out forwards;
+  margin-top: 15px;
+  background-color: rgba(0, 174, 255, 0.1);
+  color: #21a3ca;
+  border: 1px solid #21a3ca;
+  padding: 10px 15px;
+  border-radius: 8px;
+  font-weight: bold;
+  text-align: center;
+  position: relative;
+}
+
+.mensagem::before {
+  content: "✅ ";
+  font-size: 1.1em;
+}
