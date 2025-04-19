@@ -1,162 +1,300 @@
-/* Estilos globais do corpo */
+/* ==================== ESTILOS GLOBAIS ==================== */
+/* Define estilos base para toda a aplicação */
 body {
-  font-family: sans-serif;
-  background-color: black;
-  color: white;
-  padding: 20px;
-  margin: 0;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+  font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; /* Fonte moderna com fallback para sistema */
+  background-color: #121212; /* Cor de fundo escura */
+  color: white; /* Cor do texto principal */
+  margin: 0; /* Remove margens padrão */
+  min-height: 100vh; /* Garante que o body ocupe pelo menos toda a altura da tela */
+  line-height: 1.6; /* Espaçamento entre linhas para melhor legibilidade */
 }
 
-/* Navegação principal */
+/* ==================== BARRA DE NAVEGAÇÃO ==================== */
 .nav {
-  list-style: none;
-  padding: 0;
-  margin-bottom: 20px;
-  display: flex;
-  gap: 15px;
-  flex-wrap: wrap;
-  justify-content: center;
+  list-style: none; /* Remove marcadores de lista */
+  padding: 0; /* Remove padding padrão */
+  display: flex; /* Layout flexível para os itens */
+  gap: 8px; /* Espaço entre os itens */
+  width: 100%; /* Ocupa toda a largura disponível */
+  max-width: 1200px; /* Largura máxima para telas grandes */
+  padding: 16px 24px; /* Espaçamento interno */
+  background-color: rgba(255, 255, 255, 0.05); /* Fundo semi-transparente */
+  border-radius: 12px; /* Bordas arredondadas */
+  margin: 16px auto; /* Centraliza na página */
 }
 
+/* Estilos para os links da navegação */
 .nav li a {
-  display: block;
-  padding: 12px 16px;
-  text-decoration: none;
-  color: white;
-  background-color: #21a3ca;
-  border-radius: 5px;
-  transition: background-color 0.3s;
+  padding: 12px 20px; /* Espaçamento interno */
+  text-decoration: none; /* Remove sublinhado */
+  color: white; /* Cor do texto */
+  background-color: #21a3ca; /* Cor de fundo */
+  border-radius: 8px; /* Bordas arredondadas */
+  transition: all 0.3s ease; /* Transição suave para efeitos hover */
+  font-weight: 500; /* Peso da fonte */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Sombra sutil */
 }
 
-.nav li a:hover{
-  background-color: #1e8bb8;
+/* Efeito ao passar o mouse nos links */
+.nav li a:hover {
+  background-color: #1e8bb8; /* Cor mais escura */
+  transform: translateY(-2px); /* Efeito de levantar */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15); /* Sombra mais pronunciada */
 }
 
-/* Estilos para formulários */
+/* Estilo para o link ativo */
+.nav li a.active {
+  background-color: #1e8bb8; /* Cor diferente para item ativo */
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.2); /* Sombra interna */
+}
+
+/* ==================== LAYOUT PRINCIPAL ==================== */
+/* Container flexível para as seções principais */
+.flex-main {
+  display: flex; /* Layout flexível */
+  flex-direction: row; /* Itens em linha */
+  width: 100%; /* Largura total */
+  max-width: 1200px; /* Largura máxima */
+  gap: 24px; /* Espaço entre colunas */
+  margin: 0 auto; /* Centraliza na página */
+  padding: 0 24px; /* Espaçamento lateral */
+}
+
+/* Estilo para as colunas/dividers */
+.flex-main > div {
+  flex: 1; /* Cresce igualmente */
+  padding: 24px; /* Espaçamento interno */
+  background-color: rgba(255, 255, 255, 0.05); /* Fundo semi-transparente */
+  border-radius: 12px; /* Bordas arredondadas */
+  display: flex; /* Flex para alinhamento interno */
+  flex-direction: column; /* Itens em coluna */
+  backdrop-filter: blur(10px); /* Efeito de vidro fosco */
+  border: 1px solid rgba(255, 255, 255, 0.1); /* Borda sutil */
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* Sombra para profundidade */
+}
+
+/* ==================== FORMULÁRIOS ==================== */
 form {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  width: 100%;
-  max-width: 400px;
-  margin-bottom: 20px;
+  display: flex; /* Layout flexível */
+  flex-direction: column; /* Itens em coluna */
+  gap: 16px; /* Espaço entre campos */
+  width: 100%; /* Largura total */
 }
 
-/* Campos de entrada de texto e email */
+/* Estilos para campos de entrada */
 input[type="text"],
 input[type="email"],
 input[type="password"] {
-  padding: 10px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  background-color: rgba(255, 255, 255, 0.05);
-  color: white;
-  box-sizing: border-box;
+  padding: 12px 16px; /* Espaçamento interno */
+  border: 1px solid rgba(255, 255, 255, 0.1); /* Borda sutil */
+  border-radius: 8px; /* Bordas arredondadas */
+  background-color: rgba(255, 255, 255, 0.05); /* Fundo semi-transparente */
+  color: white; /* Cor do texto */
+  font-size: 16px; /* Tamanho da fonte */
+  transition: all 0.3s ease; /* Transição suave */
 }
 
+/* Estilo quando o campo está em foco */
 input:focus {
-  background-color: rgba(255, 255, 255, 0.2);
-  outline: none;
+  background-color: rgba(255, 255, 255, 0.1); /* Fundo mais claro */
+  outline: none; /* Remove contorno padrão */
+  border-color: #21a3ca; /* Borda colorida */
+  box-shadow: 0 0 0 2px rgba(33, 163, 202, 0.2); /* Sombra de foco */
 }
 
-/* Botões de submit (formulários e geral) */
-button[type="submit"],
-input[type="submit"],
-button { /* Adicionado para incluir botões de editar/excluir */
-  padding: 10px;
-  border-radius: 5px;
-  border: none;
-  background-color: #21a3ca;
-  color: white;
-  cursor: pointer;
-  transition: background-color 0.3s;
+/* ==================== BOTÕES ==================== */
+button, input[type="submit"] {
+  padding: 12px 24px; /* Espaçamento interno */
+  border-radius: 8px; /* Bordas arredondadas */
+  border: none; /* Remove borda padrão */
+  background-color: #21a3ca; /* Cor de fundo */
+  color: white; /* Cor do texto */
+  cursor: pointer; /* Cursor de ponteiro */
+  transition: all 0.3s ease; /* Transição suave */
+  font-weight: 500; /* Peso da fonte */
+  font-size: 16px; /* Tamanho da fonte */
 }
 
-button[type="submit"]:hover,
-input[type="submit"]:hover,
-button:hover { /* Adicionado para incluir botões de editar/excluir */
-  background-color: #1e8bb8;
+/* Efeito hover para botões */
+button:hover, input[type="submit"]:hover {
+  background-color: #1e8bb8; /* Cor mais escura */
+  transform: translateY(-2px); /* Efeito de levantar */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15); /* Sombra */
 }
 
-/* Lista de usuários (removido pois não é mais usado diretamente) */
+/* Efeito active (quando clicado) */
+button:active, input[type="submit"]:active {
+  transform: translateY(0); /* Volta à posição original */
+}
 
-/* Tabela de dados */
+/* ==================== TABELAS ==================== */
+.table-container {
+  width: 100%; /* Largura total */
+  overflow-x: auto; /* Rolagem horizontal se necessário */
+  margin-top: 16px; /* Espaço acima */
+  border-radius: 8px; /* Bordas arredondadas */
+}
+
 table {
-  width: 90%;
-  max-width: 600px;
-  margin-top: 20px;
-  border-collapse: collapse;
-  background-color: rgba(255, 255, 255, 0.05);
-  color: white;
+  width: 100%; /* Largura total */
+  border-collapse: separate; /* Permite bordas arredondadas */
+  border-spacing: 0; /* Remove espaçamento entre células */
+  background-color: rgba(255, 255, 255, 0.05); /* Fundo semi-transparente */
+  border-radius: 8px; /* Bordas arredondadas */
+  overflow: hidden; /* Esconde cantos que ultrapassem */
 }
 
-th,
-td {
-  padding: 12px;
-  border: 1px solid #ccc;
-  text-align: center;
+/* Estilos para células da tabela */
+th, td {
+  padding: 16px; /* Espaçamento interno */
+  text-align: left; /* Alinhamento do texto */
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1); /* Borda inferior */
 }
 
+/* Estilo para cabeçalho da tabela */
 th {
-  background-color: #21a3ca;
+  background-color: rgba(33, 163, 202, 0.2); /* Cor de fundo */
+  font-weight: 600; /* Peso da fonte */
 }
 
-/* Botões de editar/excluir (otimizado com a regra geral de button) */
-button {
-  padding: 6px 10px;
-  margin-left: 5px;
-  border-radius: 4px; /* Sobrescreve o raio maior para botões específicos */
+/* Efeito hover nas linhas */
+tr:hover {
+  background-color: rgba(255, 255, 255, 0.03); /* Fundo mais claro */
 }
 
-/* Placeholder branco */
-::placeholder {
-  color: white;
-}
-
-/* Animação de fade-in */
-@keyframes fadeIn {
-  from {
-      opacity: 0;
-      transform: scale(0.95);
-  }
-
-  to {
-      opacity: 1;
-      transform: scale(1);
-  }
-}
-
-/* Animação de fade-out */
-@keyframes fadeOut {
-  from {
-      opacity: 1;
-  }
-
-  to {
-      opacity: 0;
-  }
-}
-
-/* Mensagem de feedback */
+/* ==================== MENSAGENS DE FEEDBACK ==================== */
 .mensagem {
-  display: none;
-  opacity: 0;
-  animation: fadeIn 0.5s ease-out forwards;
-  margin-top: 15px;
-  background-color: rgba(0, 174, 255, 0.1);
-  color: #21a3ca;
-  border: 1px solid #21a3ca;
-  padding: 10px 15px;
-  border-radius: 8px;
-  font-weight: bold;
-  text-align: center;
-  position: relative;
+  display: none; /* Escondido por padrão */
+  padding: 12px 16px; /* Espaçamento interno */
+  border-radius: 8px; /* Bordas arredondadas */
+  background-color: rgba(33, 163, 202, 0.2); /* Fundo semi-transparente */
+  border: 1px solid #21a3ca; /* Borda colorida */
+  color: white; /* Cor do texto */
+  margin-top: 16px; /* Espaço acima */
+  animation: fadeIn 0.3s ease-out forwards; /* Animação de entrada */
+  font-weight: 500; /* Peso da fonte */
 }
 
+/* Ícone antes da mensagem */
 .mensagem::before {
-  content: "✅ ";
-  font-size: 1.1em;
+  content: "✓ "; /* Ícone de check */
+}
+
+/* ==================== ANIMAÇÕES ==================== */
+@keyframes fadeIn {
+  from { 
+    opacity: 0; /* Inicia transparente */
+    transform: translateY(10px); /* Começa ligeiramente abaixo */
+  }
+  to { 
+    opacity: 1; /* Torna-se visível */
+    transform: translateY(0); /* Volta à posição normal */
+  }
+}
+
+/* ==================== PÁGINA HOME ==================== */
+/* Container principal da home */
+.page-container {
+  max-width: 1200px; /* Largura máxima */
+  margin: 0 auto; /* Centraliza na página */
+  padding: 0 24px; /* Espaçamento lateral */
+}
+
+/* Conteúdo principal */
+.main-content {
+  padding: 40px 0; /* Espaçamento vertical */
+}
+
+/* Seção hero (título principal) */
+.hero-section {
+  text-align: center; /* Centraliza o conteúdo */
+  margin-bottom: 48px; /* Espaço abaixo */
+}
+
+/* Título com gradiente */
+.hero-section h1 {
+  font-size: 2.5rem; /* Tamanho grande */
+  margin-bottom: 16px; /* Espaço abaixo */
+  background: linear-gradient(90deg, #21a3ca, #1e8bb8); /* Gradiente */
+  -webkit-background-clip: text; /* Aplica gradiente ao texto */
+  background-clip: text;
+  color: transparent; /* Torna o texto transparente para mostrar o gradiente */
+  display: inline-block; /* Necessário para o efeito */
+}
+
+/* Grid de recursos */
+.features-grid {
+  display: grid; /* Layout em grid */
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* Colunas responsivas */
+  gap: 24px; /* Espaço entre cards */
+  margin: 40px 0; /* Espaço vertical */
+}
+
+/* Cards de recursos */
+.feature-card {
+  background-color: rgba(255, 255, 255, 0.05); /* Fundo semi-transparente */
+  border-radius: 12px; /* Bordas arredondadas */
+  padding: 24px; /* Espaçamento interno */
+  border: 1px solid rgba(255, 255, 255, 0.1); /* Borda sutil */
+  transition: transform 0.3s ease, box-shadow 0.3s ease; /* Transições suaves */
+}
+
+/* Efeito hover nos cards */
+.feature-card:hover {
+  transform: translateY(-5px); /* Levanta o card */
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2); /* Sombra mais pronunciada */
+}
+
+/* ==================== RESPONSIVIDADE ==================== */
+@media (max-width: 768px) {
+  /* Ajustes para tablets */
+  .flex-main {
+    flex-direction: column; /* Coluna única */
+    padding: 0 16px; /* Menos espaçamento */
+    gap: 16px; /* Menos espaço entre itens */
+  }
+  
+  .nav {
+    flex-wrap: wrap; /* Quebra de linha em itens */
+    justify-content: center; /* Centraliza itens */
+    padding: 12px; /* Menos espaçamento */
+  }
+  
+  .nav li a {
+    padding: 10px 16px; /* Menos espaçamento */
+    font-size: 14px; /* Fonte menor */
+  }
+  
+  th, td {
+    padding: 12px; /* Menos espaçamento */
+  }
+
+  /* Ajustes específicos para home */
+  .hero-section h1 {
+    font-size: 2rem; /* Título menor */
+  }
+  
+  .features-grid {
+    grid-template-columns: 1fr; /* Coluna única */
+  }
+  
+  .cta-section {
+    padding: 30px 20px; /* Menos espaçamento */
+  }
+}
+
+@media (max-width: 480px) {
+  /* Ajustes para mobile */
+  #data_table tbody td {
+    padding: 8px 0; /* Menos espaçamento */
+  }
+  
+  button {
+    padding: 6px 12px; /* Botões menores */
+    font-size: 13px; /* Texto menor */
+  }
+  
+  .flex-main > div {
+    padding: 16px; /* Menos espaçamento */
+  }
 }
