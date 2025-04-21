@@ -34,6 +34,33 @@ function exibirMensagem(mensagem, tipo = 'sucesso') {
     }, 3500);
 }
 
+// -------------------- FUNÇÃO PARA VALIDAR O FORMATO DO EMAIL --------------------
+
+function isValidEmail(email) {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/; // Expressão regular básica para validar o formato do email
+    return emailRegex.test(email); // Retorna true se o email corresponde ao padrão, false caso contrário
+}
+
+// -------------------- FUNÇÃO PARA VALIDAR OS CAMPOS DO FORMULÁRIO --------------------
+
+function validarFormulario(nome, email) {
+    const validacoes = [ // Array de objetos contendo as regras de validação
+        { condicao: !nome, mensagem: "Por favor, preencha o nome." }, // Verifica se o nome está vazio
+        { condicao: !email, mensagem: "Por favor, preencha o email." }, // Verifica se o email está vazio
+        { condicao: !isValidEmail(email), mensagem: "Por favor, insira um email válido." }, // Verifica se o formato do email é válido
+        // Adicione mais validações aqui, se necessário
+    ];
+
+    for (const validacao of validacoes) { // Itera sobre cada regra de validação
+        if (validacao.condicao) { // Se a condição de falha da validação for verdadeira
+            exibirMensagem(validacao.mensagem, "erro"); // Exibe a mensagem de erro
+            return false; // Retorna false, indicando que a validação falhou
+        }
+    }
+
+    return true; // Retorna true se todas as validações passaram
+}
+
 // -------------------- FUNÇÃO PARA RENDERIZAR A TABELA DE USUÁRIOS --------------------
 
 function renderUserTable() {
@@ -83,20 +110,23 @@ function editarUser(index) {
 editForm.addEventListener("submit", function(e) {
     e.preventDefault(); // Impede o comportamento padrão do formulário
 
-    const nome = editNomeInput.value; // Pega o novo nome digitado
-    const email = editEmailInput.value; // Pega o novo email digitado
+    const nome = editNomeInput.value.trim(); // Pega o novo nome digitado e remove espaços em branco
+    const email = editEmailInput.value.trim(); // Pega o novo email digitado e remove espaços em branco
     const index = parseInt(editIndexInput.value); // Converte o índice para número
 
-    if (index >= 0 && index < users.length) { // Verifica se o índice é válido
-        users[index] = { name: nome, email: email }; // Atualiza os dados do usuário
-        localStorage.setItem("users", JSON.stringify(users)); // Salva as alterações no localStorage
-        renderUserTable(); // Re-renderiza a tabela
-        exibirMensagem("Atualização realizada com sucesso!"); // Usando a função de mensagem
-    } else {
-        exibirMensagem("Erro ao atualizar usuário.", "erro"); // Mensagem de erro, se o índice for inválido
+    // Utiliza a função de validação para verificar os campos
+    if (validarFormulario(nome, email)) {
+        if (index >= 0 && index < users.length) { // Verifica se o índice é válido
+            users[index] = { name: nome, email: email }; // Atualiza os dados do usuário
+            localStorage.setItem("users", JSON.stringify(users)); // Salva as alterações no localStorage
+            renderUserTable(); // Re-renderiza a tabela
+            exibirMensagem("Atualização realizada com sucesso!"); // Usando a função de mensagem
+        } else {
+            exibirMensagem("Erro ao atualizar usuário.", "erro"); // Mensagem de erro, se o índice for inválido
+        }
+        this.style.display = "none"; // Oculta o formulário de edição
+        editingIndex = null; // Limpa o índice de edição
     }
-    this.style.display = "none"; // Oculta o formulário de edição
-    editingIndex = null; // Limpa o índice de edição
 });
 
 // -------------------- EVENTO DE ENVIO DO FORMULÁRIO DE CADASTRO --------------------
@@ -104,17 +134,20 @@ editForm.addEventListener("submit", function(e) {
 userForm.addEventListener("submit", function(e) {
     e.preventDefault(); // Impede o envio padrão do formulário
 
-    const nome = nameInput.value; // Pega o nome digitado no formulário
-    const email = emailInput.value; // Pega o email digitado no formulário
-    const newUser = { name: nome, email: email }; // Cria um objeto com os dados do novo usuário
+    const nome = nameInput.value.trim(); // Pega o nome digitado no formulário e remove espaços em branco
+    const email = emailInput.value.trim(); // Pega o email digitado no formulário e remove espaços em branco
 
-    users.push(newUser); // Adiciona o novo usuário na lista
-    localStorage.setItem("users", JSON.stringify(users)); // Salva a nova lista no localStorage
-    this.reset(); // Limpa os campos do formulário
-    renderUserTable(); // Atualiza a tabela com o novo usuário
-    editForm.style.display = "none"; // Garante que o formulário de edição esteja oculto
-    editingIndex = null; // Reseta o índice de edição
-    exibirMensagem("Cadastro realizado com sucesso!"); // Usando a função de mensagem
+    // Utiliza a função de validação para verificar os campos
+    if (validarFormulario(nome, email)) {
+        const newUser = { name: nome, email: email }; // Cria um objeto com os dados do novo usuário
+        users.push(newUser); // Adiciona o novo usuário na lista
+        localStorage.setItem("users", JSON.stringify(users)); // Salva a nova lista no localStorage
+        this.reset(); // Limpa os campos do formulário
+        renderUserTable(); // Atualiza a tabela com o novo usuário
+        editForm.style.display = "none"; // Garante que o formulário de edição esteja oculto
+        editingIndex = null; // Reseta o índice de edição
+        exibirMensagem("Cadastro realizado com sucesso!"); // Usando a função de mensagem
+    }
 });
 
 // -------------------- INICIALIZAÇÃO AO CARREGAR A PÁGINA --------------------
