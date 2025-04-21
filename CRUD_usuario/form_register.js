@@ -14,6 +14,26 @@ const editIndexInput = document.getElementById("editIndex"); // Seleciona o camp
 
 let editingIndex = null; // Índice do usuário sendo editado (usado para controle interno)
 
+// -------------------- FUNÇÃO PARA EXIBIR MENSAGENS DE FEEDBACK --------------------
+
+function exibirMensagem(mensagem, tipo = 'sucesso') {
+    const msg = document.getElementById("mensagem");
+    msg.textContent = mensagem;
+    msg.classList.remove("sucesso", "erro"); // Remove classes de tipo anteriores
+    msg.classList.add(tipo); // Adiciona a classe do tipo atual
+    msg.classList.remove("fadeOut"); // Remove classe de desaparecimento (caso exista)
+    msg.style.display = "block"; // Exibe a mensagem
+    msg.style.animation = "fadeIn 0.5s ease-out forwards"; // Aplica animação de entrada
+
+    setTimeout(() => {
+        msg.style.animation = "fadeOut 0.5s ease-in forwards"; // Aplica animação de saída após 3s
+    }, 3000);
+
+    setTimeout(() => {
+        msg.style.display = "none"; // Oculta a mensagem após 3.5s
+    }, 3500);
+}
+
 // -------------------- FUNÇÃO PARA RENDERIZAR A TABELA DE USUÁRIOS --------------------
 
 function renderUserTable() {
@@ -25,11 +45,11 @@ function renderUserTable() {
 
     users.forEach((user, index) => { // Itera sobre a lista de usuários
         const row = document.createElement("tr"); // Cria uma nova linha na tabela
-        row.innerHTML = ` 
-            <td><strong>Nome:</strong> ${user.name}</td> 
+        row.innerHTML = `
+            <td><strong>Nome:</strong> ${user.name}</td>
             <td><strong>Email:</strong> ${user.email}</td>
             <td>
-                <button onclick="editarUser(${index})">Editar</button> 
+                <button onclick="editarUser(${index})">Editar</button>
                 <button onclick="excluirUser(${index})">Excluir</button>
             </td>
         `; // Adiciona o conteúdo HTML da linha com nome, email e botões
@@ -44,6 +64,7 @@ function excluirUser(index) {
         users.splice(index, 1); // Remove o usuário da lista
         localStorage.setItem("users", JSON.stringify(users)); // Atualiza o localStorage com a nova lista
         renderUserTable(); // Re-renderiza a tabela
+        exibirMensagem("Usuário excluído com sucesso!"); // Usando a função de mensagem
     }
 }
 
@@ -70,6 +91,9 @@ editForm.addEventListener("submit", function(e) {
         users[index] = { name: nome, email: email }; // Atualiza os dados do usuário
         localStorage.setItem("users", JSON.stringify(users)); // Salva as alterações no localStorage
         renderUserTable(); // Re-renderiza a tabela
+        exibirMensagem("Atualização realizada com sucesso!"); // Usando a função de mensagem
+    } else {
+        exibirMensagem("Erro ao atualizar usuário.", "erro"); // Mensagem de erro, se o índice for inválido
     }
     this.style.display = "none"; // Oculta o formulário de edição
     editingIndex = null; // Limpa o índice de edição
@@ -84,26 +108,13 @@ userForm.addEventListener("submit", function(e) {
     const email = emailInput.value; // Pega o email digitado no formulário
     const newUser = { name: nome, email: email }; // Cria um objeto com os dados do novo usuário
 
-    const msg = document.getElementById("mensagem"); // Seleciona o elemento da mensagem de feedback
-    msg.textContent = "Cadastro realizado com sucesso!"; // Define o texto da mensagem
-    msg.classList.remove("fadeOut"); // Remove classe de desaparecimento (caso exista)
-    msg.style.display = "block"; // Exibe a mensagem
-    msg.style.animation = "fadeIn 0.5s ease-out forwards"; // Aplica animação de entrada
-
-    setTimeout(() => {
-        msg.style.animation = "fadeOut 0.5s ease-in forwards"; // Aplica animação de saída após 3s
-    }, 3000);
-
-    setTimeout(() => {
-        msg.style.display = "none"; // Oculta a mensagem após 3.5s
-    }, 3500);
-
     users.push(newUser); // Adiciona o novo usuário na lista
     localStorage.setItem("users", JSON.stringify(users)); // Salva a nova lista no localStorage
     this.reset(); // Limpa os campos do formulário
     renderUserTable(); // Atualiza a tabela com o novo usuário
     editForm.style.display = "none"; // Garante que o formulário de edição esteja oculto
     editingIndex = null; // Reseta o índice de edição
+    exibirMensagem("Cadastro realizado com sucesso!"); // Usando a função de mensagem
 });
 
 // -------------------- INICIALIZAÇÃO AO CARREGAR A PÁGINA --------------------
