@@ -1,4 +1,4 @@
-// form_register.js
+// form_register.js - atualizado com validação de email duplicado
 
 // -------------------- CARREGAMENTO INICIAL E VARIÁVEIS GLOBAIS --------------------
 
@@ -41,18 +41,31 @@ function isValidEmail(email) {
     return emailRegex.test(email); // Retorna true se o email corresponde ao padrão, false caso contrário
 }
 
+// -------------------- FUNÇÃO PARA VERIFICAR EMAIL JÁ CADASTRADO --------------------
+
+function emailJaCadastrado(email, ignorarIndex = null) {
+    return users.some((user, index) => user.email === email && index !== ignorarIndex); // Verifica se o email já existe (ignorando o índice atual, se for edição)
+}
+
 // -------------------- FUNÇÃO PARA VALIDAR OS CAMPOS DO FORMULÁRIO --------------------
 
-function validarFormulario(nome, email) {
-    const validacoes = [ // Array de objetos contendo as regras de validação
+function validarFormulario(nome, email, modo = "cadastro", ignorarIndex = null) {
+    const validacoes = [
         { condicao: !nome, mensagem: "Por favor, preencha o nome." }, // Verifica se o nome está vazio
         { condicao: !email, mensagem: "Por favor, preencha o email." }, // Verifica se o email está vazio
         { condicao: !isValidEmail(email), mensagem: "Por favor, insira um email válido." }, // Verifica se o formato do email é válido
-        // Adicione mais validações aqui, se necessário
     ];
 
-    for (const validacao of validacoes) { // Itera sobre cada regra de validação
-        if (validacao.condicao) { // Se a condição de falha da validação for verdadeira
+    if (modo === "cadastro" && emailJaCadastrado(email)) {
+        validacoes.push({ condicao: true, mensagem: "Este email já está cadastrado." }); // Impede emails duplicados no cadastro
+    }
+
+    if (modo === "edicao" && emailJaCadastrado(email, ignorarIndex)) {
+        validacoes.push({ condicao: true, mensagem: "Este email já está sendo usado por outro usuário." }); // Impede conflito de emails ao editar
+    }
+
+    for (const validacao of validacoes) {
+        if (validacao.condicao) {
             exibirMensagem(validacao.mensagem, "erro"); // Exibe a mensagem de erro
             return false; // Retorna false, indicando que a validação falhou
         }
@@ -73,8 +86,8 @@ function renderUserTable() {
     users.forEach((user, index) => { // Itera sobre a lista de usuários
         const row = document.createElement("tr"); // Cria uma nova linha na tabela
         row.innerHTML = `
-            <td><strong>Nome:</strong> ${user.name}</td>
-            <td><strong>Email:</strong> ${user.email}</td>
+            <td><strong>Nome:</strong> ${escapeHtml(user.name)}</td> //(escapeHTML) converte caracteres especiais em suas entidades HTML, impedindo que sejam interpretados como código
+            <td><strong>Email:</strong> ${escapeHtml(user.email)}</td> //(escapeHTML) converte caracteres especiais em suas entidades HTML, impedindo que sejam interpretados como código
             <td>
                 <button onclick="editarUser(${index})">Editar</button>
                 <button onclick="excluirUser(${index})">Excluir</button>
@@ -82,6 +95,13 @@ function renderUserTable() {
         `; // Adiciona o conteúdo HTML da linha com nome, email e botões
         dataTableBody.appendChild(row); // Adiciona a linha na tabela
     });
+}
+
+// Função para escapar caracteres HTML (adicionar no início do arquivo)
+function escapeHtml(text) {
+    const div = document.createElement('div');
+    div.textContent = text;
+    return div.innerHTML;
 }
 
 // -------------------- FUNÇÃO PARA EXCLUIR UM USUÁRIO --------------------
@@ -115,7 +135,7 @@ editForm.addEventListener("submit", function(e) {
     const index = parseInt(editIndexInput.value); // Converte o índice para número
 
     // Utiliza a função de validação para verificar os campos
-    if (validarFormulario(nome, email)) {
+    if (validarFormulario(nome, email, "edicao", index)) {
         if (index >= 0 && index < users.length) { // Verifica se o índice é válido
             users[index] = { name: nome, email: email }; // Atualiza os dados do usuário
             localStorage.setItem("users", JSON.stringify(users)); // Salva as alterações no localStorage
@@ -138,7 +158,7 @@ userForm.addEventListener("submit", function(e) {
     const email = emailInput.value.trim(); // Pega o email digitado no formulário e remove espaços em branco
 
     // Utiliza a função de validação para verificar os campos
-    if (validarFormulario(nome, email)) {
+    if (validarFormulario(nome, email, "cadastro")) {
         const newUser = { name: nome, email: email }; // Cria um objeto com os dados do novo usuário
         users.push(newUser); // Adiciona o novo usuário na lista
         localStorage.setItem("users", JSON.stringify(users)); // Salva a nova lista no localStorage
@@ -153,3 +173,4 @@ userForm.addEventListener("submit", function(e) {
 // -------------------- INICIALIZAÇÃO AO CARREGAR A PÁGINA --------------------
 
 document.addEventListener('DOMContentLoaded', renderUserTable); // Quando o DOM estiver carregado, renderiza a tabela de usuários
+
