@@ -1,5 +1,3 @@
-// form_register.js - atualizado com validação de email duplicado
-
 // -------------------- CARREGAMENTO INICIAL E VARIÁVEIS GLOBAIS --------------------
 
 let users = JSON.parse(localStorage.getItem("users")) || []; // Recupera a lista de usuários do localStorage ou inicializa como array vazio
@@ -13,6 +11,7 @@ const editEmailInput = document.getElementById("editEmail"); // Seleciona o camp
 const editIndexInput = document.getElementById("editIndex"); // Seleciona o campo oculto que guarda o índice do usuário a ser editado
 
 let editingIndex = null; // Índice do usuário sendo editado (usado para controle interno)
+console.log("DOMPurify está carregado?", typeof DOMPurify.sanitize === 'function'); // Verifica se o DOMPurify está disponível
 
 // -------------------- FUNÇÃO PARA EXIBIR MENSAGENS DE FEEDBACK --------------------
 
@@ -86,22 +85,15 @@ function renderUserTable() {
     users.forEach((user, index) => { // Itera sobre a lista de usuários
         const row = document.createElement("tr"); // Cria uma nova linha na tabela
         row.innerHTML = `
-            <td><strong>Nome:</strong> ${escapeHtml(user.name)}</td> //(escapeHTML) converte caracteres especiais em suas entidades HTML, impedindo que sejam interpretados como código
-            <td><strong>Email:</strong> ${escapeHtml(user.email)}</td> //(escapeHTML) converte caracteres especiais em suas entidades HTML, impedindo que sejam interpretados como código
+            <td><strong>Nome:</strong> ${DOMPurify.sanitize(user.name || "")}</td> <!-- Sanitiza o nome ao renderizar -->
+            <td><strong>Email:</strong> ${DOMPurify.sanitize(user.email || "")}</td> <!-- Sanitiza o email ao renderizar -->
             <td>
                 <button onclick="editarUser(${index})">Editar</button>
                 <button onclick="excluirUser(${index})">Excluir</button>
             </td>
-        `; // Adiciona o conteúdo HTML da linha com nome, email e botões
+        `;
         dataTableBody.appendChild(row); // Adiciona a linha na tabela
     });
-}
-
-// Função para escapar caracteres HTML (adicionar no início do arquivo)
-function escapeHtml(text) {
-    const div = document.createElement('div');
-    div.textContent = text;
-    return div.innerHTML;
 }
 
 // -------------------- FUNÇÃO PARA EXCLUIR UM USUÁRIO --------------------
@@ -111,41 +103,64 @@ function excluirUser(index) {
         users.splice(index, 1); // Remove o usuário da lista
         localStorage.setItem("users", JSON.stringify(users)); // Atualiza o localStorage com a nova lista
         renderUserTable(); // Re-renderiza a tabela
-        exibirMensagem("Usuário excluído com sucesso!"); // Usando a função de mensagem
+        exibirMensagem("Usuário excluído com sucesso!"); // Feedback visual
     }
 }
 
 // -------------------- FUNÇÃO PARA PREENCHER O FORMULÁRIO DE EDIÇÃO --------------------
 
 function editarUser(index) {
-    const user = users[index]; // Obtém os dados do usuário pelo índice
-    editNomeInput.value = user.name; // Preenche o campo de nome com os dados atuais
-    editEmailInput.value = user.email; // Preenche o campo de email com os dados atuais
-    editIndexInput.value = index; // Armazena o índice do usuário no campo oculto
-    editForm.style.display = "flex"; // Exibe o formulário de edição
+    // Verifica se o índice é válido (dentro do intervalo do array 'users')
+    if (index < 0 || index >= users.length) {
+        console.error("Índice de usuário inválido:", index); // Log de erro no console
+        exibirMensagem("Erro ao carregar usuário para edição", "erro"); // Feedback visual
+        return; // Interrompe a execução se o índice for inválido
+    }
+
+    const user = users[index]; // Obtém o objeto do usuário correspondente ao índice
+    
+    // Preenche os campos com os dados atuais (sanitizados para exibição)
+    editNomeInput.value = DOMPurify.sanitize(user.name || ""); // Fallback para string vazia
+    editEmailInput.value = DOMPurify.sanitize(user.email || "");
+    
+    // Armazena o índice do usuário no campo oculto
+    editIndexInput.value = index;
+    
+    // Exibe o formulário de edição
+    editForm.style.display = "flex";
+    editForm.style.animation = "fadeIn 0.3s ease-out"; // Animação de entrada
+    
+    // Foco no campo de nome após pequeno delay
+    setTimeout(() => editNomeInput.focus(), 100);
 }
 
 // -------------------- EVENTO DE ENVIO DO FORMULÁRIO DE EDIÇÃO --------------------
 
 editForm.addEventListener("submit", function(e) {
-    e.preventDefault(); // Impede o comportamento padrão do formulário
+    e.preventDefault(); // Impede o comportamento padrão de recarregar a página
 
-    const nome = editNomeInput.value.trim(); // Pega o novo nome digitado e remove espaços em branco
-    const email = editEmailInput.value.trim(); // Pega o novo email digitado e remove espaços em branco
-    const index = parseInt(editIndexInput.value); // Converte o índice para número
+    const nome = editNomeInput.value.trim(); // Remove espaços em branco
+    const email = editEmailInput.value.trim();
+    const index = parseInt(editIndexInput.value); // Converte para número
 
-    // Utiliza a função de validação para verificar os campos
+    // Validações básicas
+    if (isNaN(index) || index < 0 || index >= users.length) {
+        exibirMensagem("Índice inválido para edição", "erro");
+        return;
+    }
+
     if (validarFormulario(nome, email, "edicao", index)) {
-        if (index >= 0 && index < users.length) { // Verifica se o índice é válido
-            users[index] = { name: nome, email: email }; // Atualiza os dados do usuário
-            localStorage.setItem("users", JSON.stringify(users)); // Salva as alterações no localStorage
-            renderUserTable(); // Re-renderiza a tabela
-            exibirMensagem("Atualização realizada com sucesso!"); // Usando a função de mensagem
-        } else {
-            exibirMensagem("Erro ao atualizar usuário.", "erro"); // Mensagem de erro, se o índice for inválido
-        }
-        this.style.display = "none"; // Oculta o formulário de edição
-        editingIndex = null; // Limpa o índice de edição
+        // Atualiza os dados (sanitiza apenas ao armazenar)
+        users[index] = { 
+            name: DOMPurify.sanitize(nome, { ALLOWED_TAGS: [] }), // Remove todas tags HTML
+            email: DOMPurify.sanitize(email, { ALLOWED_ATTR: [] }) // Remove atributos
+        };
+        
+        localStorage.setItem("users", JSON.stringify(users)); // Persiste os dados
+        renderUserTable(); // Atualiza a tabela
+        exibirMensagem("Usuário atualizado com sucesso!", "sucesso");
+        this.reset(); // Limpa o formulário
+        this.style.display = "none"; // Oculta o formulário
     }
 });
 
@@ -154,23 +169,19 @@ editForm.addEventListener("submit", function(e) {
 userForm.addEventListener("submit", function(e) {
     e.preventDefault(); // Impede o envio padrão do formulário
 
-    const nome = nameInput.value.trim(); // Pega o nome digitado no formulário e remove espaços em branco
-    const email = emailInput.value.trim(); // Pega o email digitado no formulário e remove espaços em branco
+    const nome = nameInput.value.trim(); // Remove espaços em branco
+    const email = emailInput.value.trim();
 
-    // Utiliza a função de validação para verificar os campos
     if (validarFormulario(nome, email, "cadastro")) {
-        const newUser = { name: nome, email: email }; // Cria um objeto com os dados do novo usuário
-        users.push(newUser); // Adiciona o novo usuário na lista
-        localStorage.setItem("users", JSON.stringify(users)); // Salva a nova lista no localStorage
-        this.reset(); // Limpa os campos do formulário
-        renderUserTable(); // Atualiza a tabela com o novo usuário
-        editForm.style.display = "none"; // Garante que o formulário de edição esteja oculto
-        editingIndex = null; // Reseta o índice de edição
-        exibirMensagem("Cadastro realizado com sucesso!"); // Usando a função de mensagem
+        // Armazena os dados crus (sanitização será feita apenas na renderização)
+        users.push({ name: nome, email: email });
+        localStorage.setItem("users", JSON.stringify(users)); // Persiste os dados
+        this.reset(); // Limpa o formulário
+        renderUserTable(); // Atualiza a tabela
+        exibirMensagem("Cadastro realizado com sucesso!", "sucesso");
     }
 });
 
 // -------------------- INICIALIZAÇÃO AO CARREGAR A PÁGINA --------------------
 
-document.addEventListener('DOMContentLoaded', renderUserTable); // Quando o DOM estiver carregado, renderiza a tabela de usuários
-
+document.addEventListener('DOMContentLoaded', renderUserTable); // Renderiza a tabela quando o DOM estiver pronto
