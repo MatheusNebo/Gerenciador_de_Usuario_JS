@@ -1,4 +1,13 @@
-# Gerenciador de Usuários
+# 💻 Gerenciador de Usuários JS 
 
-Projeto de um gerenciador de usuário para estudos. \
-executa o cadastro e armazena os dados no LocalStorage do JS.
+CRUD simples feito com JavaScript puro, localStorage e manipulação de DOM
+
+## Funções
+- **Cadastro** de E-mail e nome
+- **Edição** e **Exclusão** de dados armazenados no LocalStorage
+- **Validações** básicas na entrada de dados
+
+## Ferramentas Utilizadas
+- **HTML5 + CSS**
+- **JavaScript Vanilla**
+- **DOMPurify**
