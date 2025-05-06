@@ -5,39 +5,52 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gerenciador de Dados</title>
     <link rel="stylesheet" href="style.css">
+    <!-- Bibliotecas para segurança e geração de IDs -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/dompurify/3.0.6/purify.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/uuid@8/dist/umd/uuidv4.min.js"></script>
 </head>
 <body>
+    <!-- Barra de navegação principal -->
     <ul class="nav">
         <li><a href="index.html">Home</a></li>
-        <li><a href="register_user.html">Gerenciador de Dados</a></li>
+        <li><a href="register_user.html" class="active">Gerenciador de Dados</a></li>
         <li><a href="#about">Sobre</a></li>
     </ul>
 
+    <!-- Container principal -->
     <div class="flex-main">
+        <!-- Seção do formulário de cadastro -->
         <div class="form-section">
             <h1>Cadastrar Novo Usuário</h1>
             <form id="userForm">
-                <input type="text" id="name" placeholder="Nome completo" required>
-                <input type="email" id="email" placeholder="Endereço de email" required>
+                <input type="text" id="name" placeholder="Nome completo" required maxlength="100">
+                <input type="email" id="email" placeholder="Endereço de email" required maxlength="254">
                 <button type="submit">Salvar</button>
                 <p id="mensagem" class="mensagem"></p>
             </form>
         </div>
 
+        <!-- Seção da tabela de usuários -->
         <div class="table-section">
             <h2>Usuários Cadastrados</h2>
+            
+            <!-- Botão para limpar todos os dados -->
+            <button id="limparTodos" class="btn-limpar-todos">Limpar Todos os Dados</button>
+            
+            <!-- Formulário de edição (oculto inicialmente) -->
             <form id="editForm" style="display: none;">
                 <input type="text" id="editNome" placeholder="Nome completo" required>
                 <input type="email" id="editEmail" placeholder="Endereço de email" required>
-                <input type="hidden" id="editIndex">
+                <input type="hidden" id="editId">
                 <button type="submit">Salvar Alterações</button>
             </form>
 
+            <!-- Container da tabela -->
             <div class="table-container">
                 <table id="data_table">
                     <thead>
                         <tr>
+                            <th>ID</th>
                             <th>Nome</th>
                             <th>Email</th>
                             <th>Ações</th>
@@ -48,6 +61,8 @@
             </div>
         </div>
     </div>
+
+    <!-- Script principal -->
     <script src="form_register.js"></script>
 </body>
 </html>

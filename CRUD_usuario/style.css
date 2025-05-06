@@ -1,300 +1,276 @@
 /* ==================== ESTILOS GLOBAIS ==================== */
-/* Define estilos base para toda a aplicação */
 body {
-  font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; /* Fonte moderna com fallback para sistema */
-  background-color: #121212; /* Cor de fundo escura */
-  color: white; /* Cor do texto principal */
-  margin: 0; /* Remove margens padrão */
-  min-height: 100vh; /* Garante que o body ocupe pelo menos toda a altura da tela */
-  line-height: 1.6; /* Espaçamento entre linhas para melhor legibilidade */
+  font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+  background-color: #121212;
+  color: white;
+  margin: 0;
+  min-height: 100vh;
+  line-height: 1.6;
 }
 
 /* ==================== BARRA DE NAVEGAÇÃO ==================== */
 .nav {
-  list-style: none; /* Remove marcadores de lista */
-  padding: 0; /* Remove padding padrão */
-  display: flex; /* Layout flexível para os itens */
-  gap: 8px; /* Espaço entre os itens */
-  width: 100%; /* Ocupa toda a largura disponível */
-  max-width: 1200px; /* Largura máxima para telas grandes */
-  padding: 16px 24px; /* Espaçamento interno */
-  background-color: rgba(255, 255, 255, 0.05); /* Fundo semi-transparente */
-  border-radius: 12px; /* Bordas arredondadas */
-  margin: 16px auto; /* Centraliza na página */
+  list-style: none;
+  padding: 0;
+  display: flex;
+  gap: 8px;
+  width: 100%;
+  max-width: 1200px;
+  padding: 16px 24px;
+  background-color: rgba(255, 255, 255, 0.05);
+  border-radius: 12px;
+  margin: 16px auto;
 }
 
-/* Estilos para os links da navegação */
 .nav li a {
-  padding: 12px 20px; /* Espaçamento interno */
-  text-decoration: none; /* Remove sublinhado */
-  color: white; /* Cor do texto */
-  background-color: #21a3ca; /* Cor de fundo */
-  border-radius: 8px; /* Bordas arredondadas */
-  transition: all 0.3s ease; /* Transição suave para efeitos hover */
-  font-weight: 500; /* Peso da fonte */
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Sombra sutil */
+  padding: 12px 20px;
+  text-decoration: none;
+  color: white;
+  background-color: #21a3ca;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+  font-weight: 500;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-/* Efeito ao passar o mouse nos links */
 .nav li a:hover {
-  background-color: #1e8bb8; /* Cor mais escura */
-  transform: translateY(-2px); /* Efeito de levantar */
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15); /* Sombra mais pronunciada */
+  background-color: #1e8bb8;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
 }
 
-/* Estilo para o link ativo */
 .nav li a.active {
-  background-color: #1e8bb8; /* Cor diferente para item ativo */
-  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.2); /* Sombra interna */
+  background-color: #1e8bb8;
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.2);
 }
 
 /* ==================== LAYOUT PRINCIPAL ==================== */
-/* Container flexível para as seções principais */
 .flex-main {
-  display: flex; /* Layout flexível */
-  flex-direction: row; /* Itens em linha */
-  width: 100%; /* Largura total */
-  max-width: 1200px; /* Largura máxima */
-  gap: 24px; /* Espaço entre colunas */
-  margin: 0 auto; /* Centraliza na página */
-  padding: 0 24px; /* Espaçamento lateral */
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  max-width: 1200px;
+  gap: 24px;
+  margin: 0 auto;
+  padding: 0 24px;
 }
 
-/* Estilo para as colunas/dividers */
 .flex-main > div {
-  flex: 1; /* Cresce igualmente */
-  padding: 24px; /* Espaçamento interno */
-  background-color: rgba(255, 255, 255, 0.05); /* Fundo semi-transparente */
-  border-radius: 12px; /* Bordas arredondadas */
-  display: flex; /* Flex para alinhamento interno */
-  flex-direction: column; /* Itens em coluna */
-  backdrop-filter: blur(10px); /* Efeito de vidro fosco */
-  border: 1px solid rgba(255, 255, 255, 0.1); /* Borda sutil */
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* Sombra para profundidade */
+  flex: 1;
+  padding: 24px;
+  background-color: rgba(255, 255, 255, 0.05);
+  border-radius: 12px;
+  display: flex;
+  flex-direction: column;
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
 }
 
 /* ==================== FORMULÁRIOS ==================== */
 form {
-  display: flex; /* Layout flexível */
-  flex-direction: column; /* Itens em coluna */
-  gap: 16px; /* Espaço entre campos */
-  width: 100%; /* Largura total */
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  width: 100%;
 }
 
-/* Estilos para campos de entrada */
 input[type="text"],
 input[type="email"],
 input[type="password"] {
-  padding: 12px 16px; /* Espaçamento interno */
-  border: 1px solid rgba(255, 255, 255, 0.1); /* Borda sutil */
-  border-radius: 8px; /* Bordas arredondadas */
-  background-color: rgba(255, 255, 255, 0.05); /* Fundo semi-transparente */
-  color: white; /* Cor do texto */
-  font-size: 16px; /* Tamanho da fonte */
-  transition: all 0.3s ease; /* Transição suave */
+  padding: 12px 16px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+  background-color: rgba(255, 255, 255, 0.05);
+  color: white;
+  font-size: 16px;
+  transition: all 0.3s ease;
 }
 
-/* Estilo quando o campo está em foco */
 input:focus {
-  background-color: rgba(255, 255, 255, 0.1); /* Fundo mais claro */
-  outline: none; /* Remove contorno padrão */
-  border-color: #21a3ca; /* Borda colorida */
-  box-shadow: 0 0 0 2px rgba(33, 163, 202, 0.2); /* Sombra de foco */
+  background-color: rgba(255, 255, 255, 0.1);
+  outline: none;
+  border-color: #21a3ca;
+  box-shadow: 0 0 0 2px rgba(33, 163, 202, 0.2);
 }
 
 /* ==================== BOTÕES ==================== */
 button, input[type="submit"] {
-  padding: 12px 24px; /* Espaçamento interno */
-  border-radius: 8px; /* Bordas arredondadas */
-  border: none; /* Remove borda padrão */
-  background-color: #21a3ca; /* Cor de fundo */
-  color: white; /* Cor do texto */
-  cursor: pointer; /* Cursor de ponteiro */
-  transition: all 0.3s ease; /* Transição suave */
-  font-weight: 500; /* Peso da fonte */
-  font-size: 16px; /* Tamanho da fonte */
+  padding: 12px 24px;
+  border-radius: 8px;
+  border: none;
+  background-color: #21a3ca;
+  color: white;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-weight: 500;
+  font-size: 16px;
 }
 
-/* Efeito hover para botões */
 button:hover, input[type="submit"]:hover {
-  background-color: #1e8bb8; /* Cor mais escura */
-  transform: translateY(-2px); /* Efeito de levantar */
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15); /* Sombra */
+  background-color: #1e8bb8;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
 }
 
-/* Efeito active (quando clicado) */
 button:active, input[type="submit"]:active {
-  transform: translateY(0); /* Volta à posição original */
+  transform: translateY(0);
+}
+
+/* ==================== BOTÃO LIMPAR TODOS ==================== */
+.btn-limpar-todos {
+  padding: 12px 24px;
+  background-color: #f44336;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  margin-bottom: 20px;
+  width: 100%;
+  max-width: 300px;
+}
+
+.btn-limpar-todos:hover {
+  background-color: #d32f2f;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+.btn-limpar-todos:active {
+  transform: translateY(0);
 }
 
 /* ==================== TABELAS ==================== */
 .table-container {
-  width: 100%; /* Largura total */
-  overflow-x: auto; /* Rolagem horizontal se necessário */
-  margin-top: 16px; /* Espaço acima */
-  border-radius: 8px; /* Bordas arredondadas */
+  width: 100%;
+  overflow-x: auto;
+  margin-top: 16px;
+  border-radius: 8px;
 }
 
 table {
-  width: 100%; /* Largura total */
-  border-collapse: separate; /* Permite bordas arredondadas */
-  border-spacing: 0; /* Remove espaçamento entre células */
-  background-color: rgba(255, 255, 255, 0.05); /* Fundo semi-transparente */
-  border-radius: 8px; /* Bordas arredondadas */
-  overflow: hidden; /* Esconde cantos que ultrapassem */
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  background-color: rgba(255, 255, 255, 0.05);
+  border-radius: 8px;
+  overflow: hidden;
 }
 
-/* Estilos para células da tabela */
 th, td {
-  padding: 16px; /* Espaçamento interno */
-  text-align: left; /* Alinhamento do texto */
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1); /* Borda inferior */
+  padding: 16px;
+  text-align: left;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
 
-/* Estilo para cabeçalho da tabela */
 th {
-  background-color: rgba(33, 163, 202, 0.2); /* Cor de fundo */
-  font-weight: 600; /* Peso da fonte */
+  background-color: rgba(33, 163, 202, 0.2);
+  font-weight: 600;
 }
 
-/* Efeito hover nas linhas */
 tr:hover {
-  background-color: rgba(255, 255, 255, 0.03); /* Fundo mais claro */
+  background-color: rgba(255, 255, 255, 0.03);
+}
+
+/* Estilo específico para a coluna de ID */
+#data_table td:first-child {
+  font-family: monospace;
+  font-size: 0.85em;
+  color: #aaa;
+  max-width: 200px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+#data_table td:first-child code {
+  background: rgba(0,0,0,0.2);
+  padding: 2px 6px;
+  border-radius: 4px;
+  display: inline-block;
 }
 
 /* ==================== MENSAGENS DE FEEDBACK ==================== */
 .mensagem {
-  display: none; /* Escondido por padrão */
-  padding: 12px 16px; /* Espaçamento interno */
-  border-radius: 8px; /* Bordas arredondadas */
-  background-color: rgba(33, 163, 202, 0.2); /* Fundo semi-transparente */
-  border: 1px solid #21a3ca; /* Borda colorida */
-  color: white; /* Cor do texto */
-  margin-top: 16px; /* Espaço acima */
-  animation: fadeIn 0.3s ease-out forwards; /* Animação de entrada */
-  font-weight: 500; /* Peso da fonte */
+  display: none;
+  padding: 12px 16px;
+  border-radius: 8px;
+  background-color: rgba(33, 163, 202, 0.2);
+  border: 1px solid #21a3ca;
+  color: white;
+  margin-top: 16px;
+  animation: fadeIn 0.3s ease-out forwards;
+  font-weight: 500;
 }
 
-/* Ícone antes da mensagem */
 .mensagem::before {
-  content: "✓ "; /* Ícone de check */
+  content: "✓ ";
+}
+
+.mensagem.sucesso {
+  background-color: rgba(76, 175, 80, 0.2);
+  border-color: #4caf50;
+  color: #4caf50;
+}
+
+.mensagem.erro {
+  background-color: rgba(244, 67, 54, 0.2);
+  border-color: #f44336;
+  color: #f44336;
 }
 
 /* ==================== ANIMAÇÕES ==================== */
 @keyframes fadeIn {
   from { 
-    opacity: 0; /* Inicia transparente */
-    transform: translateY(10px); /* Começa ligeiramente abaixo */
+    opacity: 0;
+    transform: translateY(10px);
   }
   to { 
-    opacity: 1; /* Torna-se visível */
-    transform: translateY(0); /* Volta à posição normal */
+    opacity: 1;
+    transform: translateY(0);
   }
-}
-
-/* ==================== PÁGINA HOME ==================== */
-/* Container principal da home */
-.page-container {
-  max-width: 1200px; /* Largura máxima */
-  margin: 0 auto; /* Centraliza na página */
-  padding: 0 24px; /* Espaçamento lateral */
-}
-
-/* Conteúdo principal */
-.main-content {
-  padding: 40px 0; /* Espaçamento vertical */
-}
-
-/* Seção hero (título principal) */
-.hero-section {
-  text-align: center; /* Centraliza o conteúdo */
-  margin-bottom: 48px; /* Espaço abaixo */
-}
-
-/* Título com gradiente */
-.hero-section h1 {
-  font-size: 2.5rem; /* Tamanho grande */
-  margin-bottom: 16px; /* Espaço abaixo */
-  background: linear-gradient(90deg, #21a3ca, #1e8bb8); /* Gradiente */
-  -webkit-background-clip: text; /* Aplica gradiente ao texto */
-  background-clip: text;
-  color: transparent; /* Torna o texto transparente para mostrar o gradiente */
-  display: inline-block; /* Necessário para o efeito */
-}
-
-/* Grid de recursos */
-.features-grid {
-  display: grid; /* Layout em grid */
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* Colunas responsivas */
-  gap: 24px; /* Espaço entre cards */
-  margin: 40px 0; /* Espaço vertical */
-}
-
-/* Cards de recursos */
-.feature-card {
-  background-color: rgba(255, 255, 255, 0.05); /* Fundo semi-transparente */
-  border-radius: 12px; /* Bordas arredondadas */
-  padding: 24px; /* Espaçamento interno */
-  border: 1px solid rgba(255, 255, 255, 0.1); /* Borda sutil */
-  transition: transform 0.3s ease, box-shadow 0.3s ease; /* Transições suaves */
-}
-
-/* Efeito hover nos cards */
-.feature-card:hover {
-  transform: translateY(-5px); /* Levanta o card */
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2); /* Sombra mais pronunciada */
 }
 
 /* ==================== RESPONSIVIDADE ==================== */
 @media (max-width: 768px) {
-  /* Ajustes para tablets */
   .flex-main {
-    flex-direction: column; /* Coluna única */
-    padding: 0 16px; /* Menos espaçamento */
-    gap: 16px; /* Menos espaço entre itens */
+    flex-direction: column;
+    padding: 0 16px;
+    gap: 16px;
   }
   
   .nav {
-    flex-wrap: wrap; /* Quebra de linha em itens */
-    justify-content: center; /* Centraliza itens */
-    padding: 12px; /* Menos espaçamento */
+    flex-wrap: wrap;
+    justify-content: center;
+    padding: 12px;
   }
   
   .nav li a {
-    padding: 10px 16px; /* Menos espaçamento */
-    font-size: 14px; /* Fonte menor */
+    padding: 10px 16px;
+    font-size: 14px;
   }
   
   th, td {
-    padding: 12px; /* Menos espaçamento */
-  }
-
-  /* Ajustes específicos para home */
-  .hero-section h1 {
-    font-size: 2rem; /* Título menor */
+    padding: 12px;
   }
   
-  .features-grid {
-    grid-template-columns: 1fr; /* Coluna única */
-  }
-  
-  .cta-section {
-    padding: 30px 20px; /* Menos espaçamento */
+  .btn-limpar-todos {
+    max-width: 100%;
   }
 }
 
 @media (max-width: 480px) {
-  /* Ajustes para mobile */
   #data_table tbody td {
-    padding: 8px 0; /* Menos espaçamento */
+    padding: 8px 0;
   }
   
-  button {
-    padding: 6px 12px; /* Botões menores */
-    font-size: 13px; /* Texto menor */
+  button, .btn-limpar-todos {
+    padding: 10px 16px;
+    font-size: 14px;
   }
   
   .flex-main > div {
-    padding: 16px; /* Menos espaçamento */
+    padding: 16px;
   }
 }
